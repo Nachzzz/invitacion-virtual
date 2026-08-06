@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --font-script: 'Great Vibes', cursive;
+  --font-serif: 'EB Garamond', serif;
+  --font-italic: 'Mea Culpa', cursive;
+  --font-sans: 'Montserrat', system-ui, sans-serif;
+  --color-gold: #B08D57;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: #f7efe4;
+}
+
+/* Utility font classes */
+.font-script { font-family: var(--font-script); }
+.font-serif { font-family: var(--font-serif); }
+.font-sans { font-family: var(--font-sans); }
+.font-mea { font-family: var(--font-italic); }
+
+/* Gold color utility */
+.text-gold { color: var(--color-gold); }
+
+.app-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.app-shell::before,
+.app-shell::after {
+  content: '';
+  position: absolute;
+  inset: -15%;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.app-shell::before {
+  background:
+    radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.18) 18%, rgba(255, 255, 255, 0) 42%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent 60%),
+    linear-gradient(120deg, rgba(176, 141, 87, 0.08), transparent 70%);
+  filter: blur(6px);
+  opacity: 0.9;
+  animation: drift 12s ease-in-out infinite alternate;
+}
+
+.app-shell::after {
+  background: linear-gradient(120deg, transparent 5%, rgba(255, 255, 255, 0.22) 45%, transparent 85%);
+  transform: translateX(-140%) skewX(-18deg);
+  animation: sweep 10s linear infinite;
+  mix-blend-mode: screen;
+}
+
+.app-shell--mobile::before {
+  filter: blur(3px);
+  opacity: 0.75;
+  animation: drift-mobile 10s ease-in-out infinite alternate;
+}
+
+.app-shell--mobile::after {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell::before,
+  .app-shell::after {
+    animation: none !important;
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(-2%, -2%, 0) scale(1.02);
+  }
+  100% {
+    transform: translate3d(2%, 2%, 0) scale(1.05);
+  }
+}
+
+@keyframes drift-mobile {
+  0% {
+    transform: translate3d(-1%, -1%, 0) scale(1.01);
+  }
+  100% {
+    transform: translate3d(1%, 1%, 0) scale(1.02);
+  }
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateX(-140%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(140%) skewX(-18deg);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
